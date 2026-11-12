@@ -1,0 +1,20 @@
+{"id": "Q01", "question": "Un ressortissant valdorien a-t-il besoin d'un visa pour un court séjour ?", "documents_attendus": ["regle-valdorie"], "date_min": null}
+{"id": "Q02", "question": "Un Ostranien titulaire d'un passeport de service doit-il présenter un visa ?", "documents_attendus": ["regle-ostrane"], "date_min": null}
+{"id": "Q03", "question": "Combien de temps un passeport doit-il rester valide après le départ prévu ?", "documents_attendus": ["regle-documents"], "date_min": null}
+{"id": "Q04", "question": "Comment compte-t-on les jours de présence dans la règle des 90 jours sur 180 ?", "documents_attendus": ["regle-90-180"], "date_min": null}
+{"id": "Q05", "question": "Les jours d'entrée et de sortie comptent-ils dans la durée du séjour ?", "documents_attendus": ["regle-90-180"], "date_min": null}
+{"id": "Q06", "question": "Quels justificatifs l'agent peut-il demander à l'entrée ?", "documents_attendus": ["regle-documents"], "date_min": null}
+{"id": "Q07", "question": "Un passager en zone d'attente demande l'asile : qui faut-il prévenir ?", "documents_attendus": ["proc-asile-frontiere"], "date_min": null}
+{"id": "Q08", "question": "Quel poste appeler pour obtenir un interprète en ostranien ?", "documents_attendus": ["proc-interpretariat"], "date_min": null}
+{"id": "Q09", "question": "Que faire d'un passeport qui semble falsifié ?", "documents_attendus": ["proc-document-suspect"], "date_min": null}
+{"id": "Q10", "question": "Que doit contenir une mention de contrôle ?", "documents_attendus": ["proc-controle-approfondi"], "date_min": null}
+{"id": "Q11", "question": "Qui décide d'une non-admission ?", "documents_attendus": ["proc-non-admission"], "date_min": null}
+{"id": "Q12", "question": "Pourquoi la plaine de Sarvik est-elle disputée ?", "documents_attendus": ["contexte-alpes-meridionales"], "date_min": null}
+{"id": "Q13", "question": "Valdoriens et Morvaniens parlent-ils la même langue ?", "documents_attendus": ["contexte-alpes-meridionales", "proc-interpretariat"], "date_min": null}
+{"id": "Q14", "question": "Où se trouve le centre d'accueil des personnes venues de Hadrel en Ostrane ?", "documents_attendus": ["ostrane-2026-04"], "date_min": null}
+{"id": "Q15", "question": "Quelle était la situation dans la province de Hadrel en mars 2026 ?", "documents_attendus": ["morvanie-2026-03"], "date_min": "2026-01-01"}
+{"id": "Q16", "question": "Le pont de Sarvik était-il ouvert fin 2025 ?", "documents_attendus": ["morvanie-2025-11"], "date_min": "2025-10-01"}
+{"id": "Q17", "question": "Combien de personnes déplacées la province de Lunes accueillait-elle en 2026 ?", "documents_attendus": ["morvanie-2026-03"], "date_min": "2026-01-01"}
+{"id": "Q18", "question": "Quelle est la situation de la minorité morvanienne dans la province de Sarn depuis janvier 2026 ?", "documents_attendus": ["valdorie-2026-02"], "date_min": "2026-01-01"}
+{"id": "Q19", "question": "L'état d'urgence est-il en vigueur à Morvak en 2026 ?", "documents_attendus": ["morvanie-2026-03"], "date_min": "2026-01-01"}
+{"id": "Q20", "question": "La frontière entre la Valdorie et la Morvanie est-elle ouverte en 2026 ?", "documents_attendus": ["valdorie-2026-02"], "date_min": "2026-01-01"}
