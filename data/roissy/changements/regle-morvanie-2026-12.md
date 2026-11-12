@@ -5,13 +5,18 @@ pays: Morvanie
 date: 2026-11-05
 langue: fr
 ---
-# Entrée des ressortissants morvaniens — à compter du 1er décembre 2026
+# Entrée des ressortissants morvaniens — visa obligatoire pour toute arrivée à partir du 1er décembre 2026
 
 > Règle fictive et simplifiée, à usage de formation.
 
 ## Visa
 
-Exigé à compter du 1er décembre 2026 pour tout séjour, y compris de courte durée : l'exemption de visa des ressortissants morvaniens est suspendue. Cette fiche remplace la précédente pour toute arrivée à partir de cette date.
+La date qui compte est la **date d'arrivée** du passager.
+
+- Arrivée **jusqu'au 30 novembre 2026** inclus : visa non exigé pour un court séjour (90 jours au plus sur 180 jours).
+- Arrivée **le 1er décembre 2026 ou après** : **visa exigé**, pour tout séjour, **y compris un court séjour**. L'exemption de visa des ressortissants morvaniens est suspendue.
+
+Pour toute arrivée à partir du 1er décembre 2026, cette fiche remplace la fiche « Entrée des ressortissants morvaniens » du 1er janvier 2025.
 
 ## Documents
 

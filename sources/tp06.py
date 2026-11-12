@@ -271,7 +271,7 @@ controle(3, en_production == versions[plus_haut], "l'alias « production » dés
 # et l'alias `production`. Chaque version renvoie au run qui l'a produite, avec ses
 # paramètres et sa courbe : on sait toujours **d'où vient** le modèle en service.
 #
-# ## 4. La règle change — *contient la panne 4*
+# ## 4. La règle change
 #
 # La nouvelle fiche « visa exigé pour les Morvaniens à partir du 1er décembre » et le
 # nouveau rapport sur Hadrel sont arrivés. Comment les faire entrer dans l'assistant ?
@@ -287,13 +287,13 @@ controle(3, en_production == versions[plus_haut], "l'alias « production » dés
 # (l'extraction des mentions), **le RAG pour des faits qui changent** (les règles, la
 # situation des pays). La consigne du prompt ajoute une précaution, vue au TP 2 : si
 # deux documents se contredisent, le plus récent l'emporte.
+#
+# La cellule **reconstruit l'index** avec les nouveaux documents (rangés dans
+# `data/roissy/changements/`), puis pose la question. Le RAG ne suit un changement
+# que si l'on réindexe.
 
 # %%
-# <<<PANNE 4 | l'index doit être reconstruit avec les nouveaux documents
 documentation = Documentation(avec_changements=True)
-# ===
-documentation = Documentation()
-# >>>PANNE 4
 
 
 def repondre(question: str, trouves: list[dict]) -> str:
@@ -311,32 +311,13 @@ for m in trouves:
 print("\n" + repondre(QUESTION, trouves))
 
 # %% [markdown]
-# <details><summary>Indice 1 — où regarder</summary>
+# Les deux fiches sont trouvées : l'ancienne (1er janvier 2025) et la nouvelle
+# (5 novembre 2026). La nouvelle dit d'elle-même à partir de quelle **date d'arrivée**
+# elle s'applique : c'est ce qui permet au modèle de trancher sans se tromper.
 #
-# Parmi les sources trouvées, voyez-vous une fiche datée de novembre 2026 ?
-# </details>
+# ## 5. La chaîne complète — *contient la panne 4*
 #
-# <details><summary>Indice 2 — quelle ligne</summary>
-#
-# `Documentation()` charge l'index d'**avant** les changements. Les nouveaux
-# documents sont dans `data/roissy/changements/`, mais personne ne les a indexés.
-# </details>
-#
-# <details><summary>Indice 3 — la correction</summary>
-#
-# `documentation = Documentation(avec_changements=True)`. Le RAG ne suit un
-# changement que si l'on **réindexe**.
-# </details>
-
-# %%
-controle(4, any(m["doc"] == "regle-morvanie-2026-12" for m in trouves),
-         "l'assistant ne connaît pas la nouvelle règle : il répond avec l'ancienne fiche.")
-
-# %% [markdown]
-# ## 5. La chaîne complète
-#
-# Plus de panne. Voici l'assistant entier, tel qu'il servirait au guichet le
-# 3 décembre 2026 :
+# Voici l'assistant entier, tel qu'il servirait au guichet le 3 décembre 2026 :
 #
 # 1. l'**extracteur fine-tuné**, chargé depuis le registre par son alias
 #    `production`, lit la mention de contrôle et en tire une fiche ;
@@ -345,10 +326,48 @@ controle(4, any(m["doc"] == "regle-morvanie-2026-12" for m in trouves),
 # 3. le modèle de la formation rédige une **synthèse** qui cite ses sources ;
 # 4. **l'agent décide.**
 #
-# Trois mentions, dont une en anglais. *(Une minute environ.)*
+# D'abord, on charge l'extracteur **par son alias**, comme le ferait un service en
+# production : le code ne nomme jamais une version, il demande « celle qui est en
+# production ».
 
 # %%
+# <<<PANNE 4 | un alias se désigne par @, pas par une barre oblique
 extracteur = mlflow.pyfunc.load_model("models:/extracteur-mentions@production")
+# ===
+extracteur = mlflow.pyfunc.load_model("models:/extracteur-mentions/production")
+# >>>PANNE 4
+print("Extracteur chargé : run", extracteur.metadata.run_id)
+
+# %% [markdown]
+# <details><summary>Indice 1 — où regarder</summary>
+#
+# Lisez la dernière ligne de l'erreur : MLflow cherche une version du modèle dans un
+# certain **stage**. Est-ce ce qu'on a posé à la section 3 ?
+# </details>
+#
+# <details><summary>Indice 2 — quelle ligne</summary>
+#
+# `models:/extracteur-mentions/production` : après la barre oblique, MLflow attend un
+# numéro de version ou un **stage** (l'ancien mécanisme, abandonné depuis MLflow 2.9).
+# Beaucoup de tutoriels en ligne l'écrivent encore ainsi. À la section 3, on a posé un
+# **alias**.
+# </details>
+#
+# <details><summary>Indice 3 — la correction</summary>
+#
+# `mlflow.pyfunc.load_model("models:/extracteur-mentions@production")` : un alias se
+# désigne par `@`.
+# </details>
+
+# %%
+version_production = client.get_model_version_by_alias("extracteur-mentions", "production")
+controle(4, extracteur.metadata.run_id == version_production.run_id,
+         "le modèle chargé n'est pas celui que désigne l'alias « production ».")
+
+# %% [markdown]
+# Puis la chaîne, sur trois mentions, dont une en anglais. *(Une minute environ.)*
+
+# %%
 MENTIONS = [
     "03/12 07h55, vol MV218. Ressortissant morvanien, passeport ordinaire valide. Il déclare rendre visite "
     "à son frère installé à Lyon. Aucune demande d'asile.",
@@ -401,7 +420,8 @@ else:
 #   (des **nombres**), artefacts (le modèle). On y met **tout ce qui distingue** deux
 #   variantes, sinon la comparaison est muette.
 # - Le **registre** garde les versions ; l'**alias** `production` désigne celle qu'on
-#   sert. Changer de modèle, c'est déplacer l'alias — dans le bon sens.
+#   sert. Changer de modèle, c'est déplacer l'alias — dans le bon sens. On charge
+#   le modèle par son alias : `models:/nom@production`.
 # - Deux variantes ne se comparent que sur **les mêmes jeux d'évaluation**.
 # - **Fine-tuning** pour une **forme** stable ; **RAG** pour des **faits** qui
 #   changent. Et le RAG ne suit un changement que si l'on **réindexe**.
