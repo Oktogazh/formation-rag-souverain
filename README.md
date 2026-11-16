@@ -29,7 +29,7 @@ git clone <adresse du dépôt>
 cd <dossier du dépôt>
 conda env create -f environment.yml
 conda activate formation-rag-souverain
-python -m ipykernel install --user --name formation-rag-souverain
+python -m ipykernel install --user --name formation-rag-souverain --display-name "Formation RAG souverain"
 ollama pull ministral-3:3b
 ollama pull bge-m3
 python tp.py check
